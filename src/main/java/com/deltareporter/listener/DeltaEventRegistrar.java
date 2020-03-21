@@ -175,17 +175,31 @@ public class DeltaEventRegistrar implements TestLifecycleAware {
   }
 
   public void onTestContextFinish(TestContextAdapter testContextAdapter) {
-    String end_datetime = new Date().toString();
-    this.testSuiteHistoryTypeService.finish(
-        this.suiteHistory.getTest_suite_history_id(),
-        end_datetime,
-        testContextAdapter.testContextStatus());
+    if (!this.DELTA_ENABLED) {
+      return;
+    }
+    try {
+      String end_datetime = new Date().toString();
+      this.testSuiteHistoryTypeService.finish(
+          this.suiteHistory.getTest_suite_history_id(),
+          end_datetime,
+          testContextAdapter.testContextStatus());
+        } catch (Throwable e) {
+          LOGGER.error("Undefined error during test context finish!", e);
+        }
   }
 
   public void onTestSuiteContextFinish(SuiteAdapter testSuiteAdapter) {
-    String end_datetime = new Date().toString();
-    this.testRunTypeService.finish(
-        this.DELTA_TEST_RUN_ID, end_datetime, testSuiteAdapter.testSuiteContextStatus());
+    if (!this.DELTA_ENABLED) {
+      return;
+    }
+    try {
+      String end_datetime = new Date().toString();
+      this.testRunTypeService.finish(
+          this.DELTA_TEST_RUN_ID, end_datetime, testSuiteAdapter.testSuiteContextStatus());
+        } catch (Throwable e) {
+          LOGGER.error("Undefined error during test suite finish!", e);
+        }
   }
 
   public void onTestHook(TestHookable hookCallBack, TestResultAdapter adapter) {
