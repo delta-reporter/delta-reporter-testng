@@ -7,6 +7,4 @@ public interface SuiteAdapter {
   String[] getSuiteDependsOnMethods();
 
   String testSuiteContextStatus();
-
 }
-

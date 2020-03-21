@@ -6,14 +6,13 @@ import java.util.function.Supplier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-public class AsyncUtil
-{
+public class AsyncUtil {
   private static final Logger LOGGER = LoggerFactory.getLogger(AsyncUtil.class);
 
   private static final int CONNECT_TIMEOUT = 60000;
 
-  public static <I> I get(CompletableFuture<I> async, Supplier<CompletableFuture<I>> initFunctionality) {
+  public static <I> I get(
+      CompletableFuture<I> async, Supplier<CompletableFuture<I>> initFunctionality) {
     if (async == null) {
       async = initFunctionality.get();
     }
@@ -29,12 +28,14 @@ public class AsyncUtil
     if (async != null) {
       try {
         result = async.get(60000L, TimeUnit.MILLISECONDS);
-      } catch (InterruptedException|java.util.concurrent.ExecutionException|java.util.concurrent.TimeoutException e) {
-        String message = (errorMessage != null) ? (e.getMessage() + ". " + errorMessage) : e.getMessage();
+      } catch (InterruptedException
+          | java.util.concurrent.ExecutionException
+          | java.util.concurrent.TimeoutException e) {
+        String message =
+            (errorMessage != null) ? (e.getMessage() + ". " + errorMessage) : e.getMessage();
         LOGGER.error(message, e);
       }
     }
     return result;
   }
 }
-

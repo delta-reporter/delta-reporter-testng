@@ -6,4 +6,3 @@ public interface TestRunTypeService {
 
   void finish(Integer paramInteger1, String paramString2, String paramString3);
 }
-

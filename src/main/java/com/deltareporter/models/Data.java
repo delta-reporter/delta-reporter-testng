@@ -1,8 +1,6 @@
 package com.deltareporter.models;
 
-
-public class Data
-{
+public class Data {
 
   private String message;
 

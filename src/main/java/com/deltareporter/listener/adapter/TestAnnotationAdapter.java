@@ -4,4 +4,3 @@ public interface TestAnnotationAdapter {
 
   boolean isEnabled();
 }
-

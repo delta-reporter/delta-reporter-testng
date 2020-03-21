@@ -1,20 +1,16 @@
 package com.deltareporter.models;
 
-import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import javax.validation.constraints.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TestRunType extends AbstractType {
-  @NotNull
-  private String test_type;
-  @NotNull
-  private Integer launch_id;
-  @NotNull
-  private String datetime;
+  @NotNull private String test_type;
+  @NotNull private Integer launch_id;
+  @NotNull private String datetime;
   private String test_run_status;
   private String end_datetime;
   private Integer test_run_id;
-
 
   public TestRunType() {}
 

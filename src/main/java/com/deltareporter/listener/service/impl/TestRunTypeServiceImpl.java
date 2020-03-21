@@ -5,14 +5,11 @@ import com.deltareporter.listener.service.TestRunTypeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-public class TestRunTypeServiceImpl
-  implements TestRunTypeService
-{
+public class TestRunTypeServiceImpl implements TestRunTypeService {
   private static final Logger LOGGER = LoggerFactory.getLogger(TestRunTypeServiceImpl.class);
-  
+
   private final DeltaClient deltaClient;
-  
+
   public TestRunTypeServiceImpl(DeltaClient deltaClient) {
     this.deltaClient = deltaClient;
   }

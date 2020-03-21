@@ -1,8 +1,6 @@
 package com.deltareporter.listener.adapter;
 
-
-public enum TestResultStatus
-{
+public enum TestResultStatus {
   UNKNOWN(-2),
   SKIP(3);
 
@@ -16,4 +14,3 @@ public enum TestResultStatus
     return this.code;
   }
 }
-

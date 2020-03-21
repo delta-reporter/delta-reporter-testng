@@ -16,6 +16,4 @@ public interface TestResultAdapter {
   RuntimeException getSkipExceptionInstance(String paramString);
 
   MethodAdapter getMethodAdapter();
-
 }
-

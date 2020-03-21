@@ -3,19 +3,12 @@ package com.deltareporter.models;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import javax.validation.constraints.NotNull;
 
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TestCaseType
-  extends AbstractType
-{
-  @NotNull
-  private String name;
-  @NotNull
-  private String start_datetime;
-  @NotNull
-  private Integer test_suite_id;
-  @NotNull
-  private Integer test_run_id;
+public class TestCaseType extends AbstractType {
+  @NotNull private String name;
+  @NotNull private String start_datetime;
+  @NotNull private Integer test_suite_id;
+  @NotNull private Integer test_run_id;
   private Integer test_id;
   private Integer test_history_id;
   private boolean needRerun;
@@ -85,7 +78,7 @@ public class TestCaseType
     return this.data;
   }
 
-  public boolean isNeedRerun() { 
+  public boolean isNeedRerun() {
     return this.needRerun;
   }
 

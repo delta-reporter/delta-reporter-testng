@@ -1,8 +1,6 @@
 package com.deltareporter.client;
 
-
-public enum Path
-{
+public enum Path {
   PROJECTS_PATH("/api/v1/project"),
   STATUS_PATH("/api/v1/status"),
   TEST_SUITE_HISTORY_PATH("/api/v1/test_suite_history"),
@@ -16,9 +14,7 @@ public enum Path
     this.relativePath = relativePath;
   }
 
-
   public String build(String serviceUrl, Object... parameters) {
     return serviceUrl + String.format(this.relativePath, parameters);
   }
 }
-

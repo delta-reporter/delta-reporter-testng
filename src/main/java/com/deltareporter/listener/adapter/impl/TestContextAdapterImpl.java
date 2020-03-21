@@ -3,10 +3,7 @@ package com.deltareporter.listener.adapter.impl;
 import com.deltareporter.listener.adapter.TestContextAdapter;
 import org.testng.ITestContext;
 
-
-public class TestContextAdapterImpl
-  implements TestContextAdapter
-{
+public class TestContextAdapterImpl implements TestContextAdapter {
   private final ITestContext test_context;
 
   public TestContextAdapterImpl(ITestContext test_context) {

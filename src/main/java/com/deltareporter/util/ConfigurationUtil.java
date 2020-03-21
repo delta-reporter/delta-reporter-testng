@@ -14,9 +14,7 @@ import org.apache.commons.configuration2.tree.NodeCombiner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-public class ConfigurationUtil
-{
+public class ConfigurationUtil {
   private static final Logger LOGGER = LoggerFactory.getLogger(ConfigurationUtil.class);
 
   private static final String ERR_MSG_INIT_CONFIG = "Unable to initialize a configuration '%s'";
@@ -31,14 +29,16 @@ public class ConfigurationUtil
     if (configuration != null) {
       return configuration;
     }
-    CombinedConfiguration config = new CombinedConfiguration((NodeCombiner)new MergeCombiner());
+    CombinedConfiguration config = new CombinedConfiguration((NodeCombiner) new MergeCombiner());
     try {
       config.setThrowExceptionOnMissing(throwExceptionOnMissing);
-      config.addConfiguration((Configuration)new SystemConfiguration());
-      config.addConfiguration((Configuration)getDeltaPropertiesConfiguration());
+      config.addConfiguration((Configuration) new SystemConfiguration());
+      config.addConfiguration((Configuration) getDeltaPropertiesConfiguration());
     } catch (ConfigurationException e) {
-      String message = String.format("Unable to initialize a configuration '%s'", new Object[] { "delta.properties" });
-      LOGGER.error(message, (Throwable)e);
+      String message =
+          String.format(
+              "Unable to initialize a configuration '%s'", new Object[] {"delta.properties"});
+      LOGGER.error(message, (Throwable) e);
     }
     configuration = config;
     return config;
@@ -47,14 +47,19 @@ public class ConfigurationUtil
   public static void addSystemConfiguration(String key, String value) {
     System.setProperty(key, value);
     if (configuration != null) {
-      configuration.addConfiguration((Configuration)new SystemConfiguration());
+      configuration.addConfiguration((Configuration) new SystemConfiguration());
     }
   }
 
-  private static FileBasedConfiguration getDeltaPropertiesConfiguration() throws ConfigurationException {
-    return (FileBasedConfiguration)(new FileBasedConfigurationBuilder(PropertiesConfiguration.class))
-      .configure(new BuilderParameters[] { (BuilderParameters)(new Parameters()).properties().setFileName("delta.properties")
-        }).getConfiguration();
+  private static FileBasedConfiguration getDeltaPropertiesConfiguration()
+      throws ConfigurationException {
+    return (FileBasedConfiguration)
+        (new FileBasedConfigurationBuilder(PropertiesConfiguration.class))
+            .configure(
+                new BuilderParameters[] {
+                  (BuilderParameters)
+                      (new Parameters()).properties().setFileName("delta.properties")
+                })
+            .getConfiguration();
   }
 }
-

@@ -6,10 +6,7 @@ import com.deltareporter.client.ExtendedClient;
 import com.deltareporter.models.*;
 import com.deltareporter.util.http.HttpClient;
 
-
-public class DeltaClientImpl
-  implements DeltaClient
-{
+public class DeltaClientImpl implements DeltaClient {
   private final BasicClient basicClient;
   private final ExtendedClient extendedClient;
 
@@ -30,11 +27,13 @@ public class DeltaClientImpl
     return this.basicClient.createTestRun(testRun);
   }
 
-  public HttpClient.Response<TestSuiteHistoryType> createTestSuiteHistory(TestSuiteHistoryType testSuiteHistory) {
+  public HttpClient.Response<TestSuiteHistoryType> createTestSuiteHistory(
+      TestSuiteHistoryType testSuiteHistory) {
     return this.basicClient.createTestSuiteHistory(testSuiteHistory);
   }
 
-  public HttpClient.Response<TestSuiteHistoryType> finishTestSuiteHistory(TestSuiteHistoryType testSuiteHistory) {
+  public HttpClient.Response<TestSuiteHistoryType> finishTestSuiteHistory(
+      TestSuiteHistoryType testSuiteHistory) {
     return this.basicClient.finishTestSuiteHistory(testSuiteHistory);
   }
 
@@ -58,16 +57,13 @@ public class DeltaClientImpl
     return this.basicClient.getProject();
   }
 
-
   public BasicClient initProject(String project) {
     return this.basicClient.initProject(project);
   }
 
-
   public String getServiceUrl() {
     return this.basicClient.getServiceUrl();
   }
-
 
   public Integer registerLaunch(String name, String project) {
     return this.extendedClient.registerLaunch(name, project);
@@ -81,15 +77,20 @@ public class DeltaClientImpl
     this.extendedClient.finishTestRun(test_run_id, end_datetime, test_run_status);
   }
 
-  public TestSuiteHistoryType registerTestSuiteHistory(String name, String test_type, String start_datetime, Integer test_run_id) {
-    return this.extendedClient.registerTestSuiteHistory(name, test_type, start_datetime, test_run_id);
+  public TestSuiteHistoryType registerTestSuiteHistory(
+      String name, String test_type, String start_datetime, Integer test_run_id) {
+    return this.extendedClient.registerTestSuiteHistory(
+        name, test_type, start_datetime, test_run_id);
   }
 
-  public void finishTestSuiteHistory(Integer test_suite_history_id, String end_datetime, String test_suite_status) {
-    this.extendedClient.finishTestSuiteHistory(test_suite_history_id, end_datetime, test_suite_status);
+  public void finishTestSuiteHistory(
+      Integer test_suite_history_id, String end_datetime, String test_suite_status) {
+    this.extendedClient.finishTestSuiteHistory(
+        test_suite_history_id, end_datetime, test_suite_status);
   }
 
-  public TestCaseType registerTestCase(String name, String datetime, Integer test_suite_id, Integer test_run_id) {
+  public TestCaseType registerTestCase(
+      String name, String datetime, Integer test_suite_id, Integer test_run_id) {
     return this.extendedClient.registerTestCase(name, datetime, test_suite_id, test_run_id);
   }
 }

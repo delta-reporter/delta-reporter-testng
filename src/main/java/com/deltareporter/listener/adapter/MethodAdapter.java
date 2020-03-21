@@ -17,6 +17,4 @@ public interface MethodAdapter {
   boolean isBeforeTestConfiguration();
 
   boolean isAfterTestConfiguration();
-
 }
-

@@ -14,15 +14,16 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-public class HttpClient
-{
+public class HttpClient {
   private static final Logger LOGGER = LoggerFactory.getLogger(HttpClient.class);
 
   private static final Integer CONNECT_TIMEOUT = Integer.valueOf(60000);
   private static final Integer READ_TIMEOUT = Integer.valueOf(60000);
 
-  private static Client client = Client.create((ClientConfig)new DefaultClientConfig(new Class[] { GensonProvider.class })); static {
+  private static Client client =
+      Client.create((ClientConfig) new DefaultClientConfig(new Class[] {GensonProvider.class}));
+
+  static {
     client.setConnectTimeout(CONNECT_TIMEOUT);
     client.setReadTimeout(READ_TIMEOUT);
   }
@@ -32,7 +33,8 @@ public class HttpClient
     return uri(url, null);
   }
 
-  public static Executor uri(Path path, Map<String, String> queryParameters, String serviceUrl, Object... parameters) {
+  public static Executor uri(
+      Path path, Map<String, String> queryParameters, String serviceUrl, Object... parameters) {
     String url = path.build(serviceUrl, parameters);
     return uri(url, queryParameters);
   }
@@ -42,35 +44,40 @@ public class HttpClient
     if (queryParameters != null) {
       MultivaluedMapImpl multivaluedMapImpl = new MultivaluedMapImpl();
       queryParameters.forEach(multivaluedMapImpl::add);
-      webResource = webResource.queryParams((MultivaluedMap)multivaluedMapImpl);
+      webResource = webResource.queryParams((MultivaluedMap) multivaluedMapImpl);
     }
     return new Executor(webResource);
   }
 
-  public static class Executor
-  {
+  public static class Executor {
     private WebResource.Builder builder;
     private String errorMessage;
 
     public Executor(WebResource webResource) {
-      this
-        .builder = (WebResource.Builder)webResource.type("application/json").accept(new String[] { "application/json" });
+      this.builder =
+          (WebResource.Builder)
+              webResource.type("application/json").accept(new String[] {"application/json"});
     }
 
     public <R> HttpClient.Response<R> get(Class<R> responseClass) {
-      return execute(responseClass, builder -> (ClientResponse)builder.get(ClientResponse.class));
+      return execute(responseClass, builder -> (ClientResponse) builder.get(ClientResponse.class));
     }
 
     public <R> HttpClient.Response<R> post(Class<R> responseClass, Object requestEntity) {
-      return execute(responseClass, builder -> (ClientResponse)builder.post(ClientResponse.class, requestEntity));
+      return execute(
+          responseClass,
+          builder -> (ClientResponse) builder.post(ClientResponse.class, requestEntity));
     }
 
     public <R> HttpClient.Response<R> put(Class<R> responseClass, Object requestEntity) {
-      return execute(responseClass, builder -> (ClientResponse)builder.put(ClientResponse.class, requestEntity));
+      return execute(
+          responseClass,
+          builder -> (ClientResponse) builder.put(ClientResponse.class, requestEntity));
     }
 
     public <R> HttpClient.Response<R> delete(Class<R> responseClass) {
-      return execute(responseClass, builder -> (ClientResponse)builder.delete(ClientResponse.class));
+      return execute(
+          responseClass, builder -> (ClientResponse) builder.delete(ClientResponse.class));
     }
 
     public Executor type(String mediaType) {
@@ -79,7 +86,7 @@ public class HttpClient
     }
 
     public Executor accept(String mediaType) {
-      this.builder.accept(new String[] { mediaType });
+      this.builder.accept(new String[] {mediaType});
       return this;
     }
 
@@ -101,17 +108,21 @@ public class HttpClient
       }
     }
 
-    private <R> HttpClient.Response<R> execute(Class<R> responseClass, Function<WebResource.Builder, ClientResponse> methodBuilder) {
+    private <R> HttpClient.Response<R> execute(
+        Class<R> responseClass, Function<WebResource.Builder, ClientResponse> methodBuilder) {
       HttpClient.Response<R> rs = new HttpClient.Response<>();
       try {
         ClientResponse response = methodBuilder.apply(this.builder);
         int status = response.getStatus();
         rs.setStatus(status);
         if (responseClass != null && !responseClass.isAssignableFrom(Void.class) && status == 200) {
-          rs.setObject((R)response.getEntity(responseClass));
+          rs.setObject((R) response.getEntity(responseClass));
         }
       } catch (Exception e) {
-        String message = (this.errorMessage == null) ? e.getMessage() : (e.getMessage() + ". " + this.errorMessage);
+        String message =
+            (this.errorMessage == null)
+                ? e.getMessage()
+                : (e.getMessage() + ". " + this.errorMessage);
         HttpClient.LOGGER.error(message, e);
       }
       return rs;
@@ -123,9 +134,7 @@ public class HttpClient
     }
   }
 
-
-  public static class Response<T>
-  {
+  public static class Response<T> {
     private int status;
 
     private T object;
@@ -154,4 +163,3 @@ public class HttpClient
     }
   }
 }
-
