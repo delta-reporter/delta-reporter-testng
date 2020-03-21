@@ -5,7 +5,6 @@ public enum DeltaConfiguration implements Configuration {
   SERVICE_URL("delta_service_url", new Object(), String.class, false),
   TEST_TYPE("delta_test_type", new Object(), String.class, false),
   PROJECT("delta_project", "", String.class, true),
-  RERUN_FAILURES("delta_rerun_failures", Boolean.valueOf(false), Boolean.class, false),
   CONFIGURATOR(
       "delta_configurator", "com.deltareporter.config.DefaultConfigurator", String.class, true);
 

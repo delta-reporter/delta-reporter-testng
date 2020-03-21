@@ -32,8 +32,6 @@ public class DeltaEventRegistrar implements TestLifecycleAware {
 
   private Integer DELTA_TEST_RUN_ID;
 
-  private boolean DELTA_RERUN_FAILURES;
-
   private String DELTA_CONFIGURATOR;
 
   private IConfigurator configurator;
@@ -117,10 +115,6 @@ public class DeltaEventRegistrar implements TestLifecycleAware {
 
       if (this.registeredTests.containsKey(testName)) {
         startedTest = this.registeredTests.get(testName);
-
-        if (this.DELTA_RERUN_FAILURES && !startedTest.isNeedRerun()) {
-          throw adapter.getSkipExceptionInstance("ALREADY_PASSED: " + testName);
-        }
 
         startedTest.setTest_history_id(testCase.getTest_history_id());
         startedTest.setEnd_datetime(null);
@@ -207,17 +201,8 @@ public class DeltaEventRegistrar implements TestLifecycleAware {
       LOGGER.info("IHookCallBack: Delta Reporter not connected so running the test body");
       hookCallBack.runTestMethod(adapter);
     } else {
-      String testName = this.configurator.getTestName(adapter);
-      TestCaseType startedTest = this.registeredTests.get(testName);
-
-      if (this.DELTA_RERUN_FAILURES && startedTest != null && !startedTest.isNeedRerun()) {
-        LOGGER.info(
-            "IHookCallBack: test will not be executed since it already passed in previous run");
-      } else {
-
         LOGGER.debug("IHookCallBack: default execution of test body");
         hookCallBack.runTestMethod(adapter);
-      }
     }
   }
 
@@ -228,7 +213,6 @@ public class DeltaEventRegistrar implements TestLifecycleAware {
       this.DELTA_ENABLED = (Boolean) DeltaConfiguration.ENABLED.get(config, adapter);
       this.DELTA_TEST_TYPE = (String) DeltaConfiguration.TEST_TYPE.get(config, adapter);
       this.DELTA_PROJECT = (String) DeltaConfiguration.PROJECT.get(config, adapter);
-      this.DELTA_RERUN_FAILURES = (Boolean) DeltaConfiguration.RERUN_FAILURES.get(config, adapter);
       this.DELTA_CONFIGURATOR = (String) DeltaConfiguration.CONFIGURATOR.get(config, adapter);
 
       if (this.DELTA_ENABLED) {

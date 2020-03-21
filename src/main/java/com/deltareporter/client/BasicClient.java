@@ -4,7 +4,6 @@ import com.deltareporter.models.*;
 import com.deltareporter.util.http.HttpClient;
 
 public interface BasicClient {
-  //  void setAuthToken(String paramString);
 
   boolean isAvailable();
 

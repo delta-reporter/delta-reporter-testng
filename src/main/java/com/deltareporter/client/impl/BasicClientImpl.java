@@ -5,8 +5,12 @@ import com.deltareporter.client.Path;
 import com.deltareporter.models.*;
 import com.deltareporter.util.http.HttpClient;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BasicClientImpl implements BasicClient {
+  private static final Logger LOGGER = LoggerFactory.getLogger(BasicClientImpl.class);
+
   private final String serviceURL;
   private String project = "UNKNOWN";
 
@@ -15,11 +19,17 @@ public class BasicClientImpl implements BasicClient {
   }
 
   public boolean isAvailable() {
-    HttpClient.Response response =
+    try{
+      HttpClient.Response response =
         HttpClient.uri(Path.STATUS_PATH, this.serviceURL, new Object[0])
             .onFailure("Unable to send ping")
             .get(String.class);
-    return (response.getStatus() == 200);
+
+        return response.getStatus() == 200;
+    } catch (Exception e) {
+      LOGGER.info("Cannot connect to Delta Reporter:", e);
+      return false;
+    }
   }
 
   public synchronized HttpClient.Response<LaunchType> createLaunch(LaunchType launch) {
