@@ -6,7 +6,8 @@
 
   <groupId>com.deltareporter</groupId>
   <artifactId>delta-reporter-testng-maven-plugin</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0-beta-1</version>
+  <packaging>jar</packaging>
 
   <name>delta-reporter-testng-maven-plugin</name>
   <description>This plugin provides a custom listener and method interceptors to send data from your tests into Delta Reporter</description>
