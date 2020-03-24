@@ -57,14 +57,14 @@ public class ExtendedClientImpl implements ExtendedClient {
   }
 
   public TestSuiteHistoryType registerTestSuiteHistory(
-      String name, String test_type, String start_datetime, Integer test_run_id) {
+      String name, String test_type, String start_datetime, Integer test_run_id, String project) {
     TestSuiteHistoryType test_suite_history =
-        new TestSuiteHistoryType(name, test_type, start_datetime, test_run_id);
-    String suiteHistoryDetails = "Name: %s, Test Type: %s, DateTime: %s, TestRunId: %s";
+        new TestSuiteHistoryType(name, test_type, start_datetime, test_run_id, project);
+    String suiteHistoryDetails = "Name: %s, Test Type: %s, DateTime: %s, TestRunId: %s, Project: %s";
     LOGGER.debug(
         "Test Suite History details to create:"
             + String.format(
-                suiteHistoryDetails, new Object[] {name, test_type, start_datetime, test_run_id}));
+                suiteHistoryDetails, new Object[] {name, test_type, start_datetime, test_run_id, project}));
 
     HttpClient.Response<TestSuiteHistoryType> response =
         this.client.createTestSuiteHistory(test_suite_history);
@@ -108,27 +108,27 @@ public class ExtendedClientImpl implements ExtendedClient {
   }
 
   public TestCaseType registerTestCase(
-      String name, String datetime, Integer test_suite_id, Integer test_run_id) {
-    TestCaseType testCase = new TestCaseType(name, datetime, test_suite_id, test_run_id);
-    String testCaseDetails = "name: %s, datetime: %s, test_suite_id: %d, test_run_id: %d";
+      String name, String datetime, Integer test_suite_id, Integer test_run_id, Integer test_suite_history_id) {
+    TestCaseType testCase = new TestCaseType(name, datetime, test_suite_id, test_run_id, test_suite_history_id);
+    String testCaseDetails = "name: %s, datetime: %s, test_suite_id: %d, test_run_id: %d, test_suite_history_id: %d";
     LOGGER.debug(
         "Test Case details for registration:"
             + String.format(
-                testCaseDetails, new Object[] {name, datetime, test_suite_id, test_run_id}));
+                testCaseDetails, new Object[] {name, datetime, test_suite_id, test_run_id, test_suite_history_id}));
     HttpClient.Response<TestCaseType> response = this.client.createTestCase(testCase);
     testCase = (TestCaseType) response.getObject();
     if (testCase == null) {
       throw new RuntimeException(
           "Unable to register test case '"
               + String.format(
-                  testCaseDetails, new Object[] {name, datetime, test_suite_id, test_run_id})
+                  testCaseDetails, new Object[] {name, datetime, test_suite_id, test_run_id, test_suite_history_id})
               + "' for delta service: "
               + this.client.getServiceUrl());
     }
     LOGGER.debug(
         "Registered test case details:"
             + String.format(
-                testCaseDetails, new Object[] {name, datetime, test_suite_id, test_run_id}));
+                testCaseDetails, new Object[] {name, datetime, test_suite_id, test_run_id, test_suite_history_id}));
 
     return testCase;
   }

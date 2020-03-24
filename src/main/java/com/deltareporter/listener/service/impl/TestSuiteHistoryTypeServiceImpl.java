@@ -17,8 +17,8 @@ public class TestSuiteHistoryTypeServiceImpl implements TestSuiteHistoryTypeServ
   }
 
   public TestSuiteHistoryType register(
-      String name, String test_type, String start_datetime, Integer test_run_id) {
-    return this.deltaClient.registerTestSuiteHistory(name, test_type, start_datetime, test_run_id);
+      String name, String test_type, String start_datetime, Integer test_run_id, String project) {
+    return this.deltaClient.registerTestSuiteHistory(name, test_type, start_datetime, test_run_id, project);
   }
 
   public void finish(Integer test_suite_history_id, String end_datetime, String test_suite_status) {

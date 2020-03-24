@@ -9,12 +9,15 @@ public class TestCaseType extends AbstractType {
   @NotNull private String start_datetime;
   @NotNull private Integer test_suite_id;
   @NotNull private Integer test_run_id;
+  @NotNull private Integer test_suite_history_id;
   private Integer test_id;
   private Integer test_history_id;
   private boolean needRerun;
   private String status;
   private String end_datetime;
-  private Data data;
+  private String trace;
+  private String file;
+  private Integer retries;
 
   public void setTest_history_id(Integer test_history_id) {
     this.test_history_id = test_history_id;
@@ -36,8 +39,16 @@ public class TestCaseType extends AbstractType {
     this.status = status;
   }
 
-  public void setData(Data data) {
-    this.data = data;
+  public void setTrace(String trace) {
+    this.trace = trace;
+  }
+
+  public void setFile(String file) {
+    this.file = file;
+  }
+
+  public void setRetries(Integer retries) {
+    this.retries = retries;
   }
 
   public TestCaseType() {}
@@ -62,6 +73,10 @@ public class TestCaseType extends AbstractType {
     return this.test_run_id;
   }
 
+  public Integer getTest_suite_history_id() {
+    return this.test_suite_history_id;
+  }
+
   public Integer getTest_history_id() {
     return this.test_history_id;
   }
@@ -74,18 +89,27 @@ public class TestCaseType extends AbstractType {
     return this.status;
   }
 
-  public Data getData() {
-    return this.data;
+  public String getTrace() {
+    return this.trace;
+  }
+
+  public String getFile() {
+    return this.file;
+  }
+
+  public Integer getRetries() {
+    return this.retries;
   }
 
   public boolean isNeedRerun() {
     return this.needRerun;
   }
 
-  public TestCaseType(String name, String datetime, Integer test_suite_id, Integer test_run_id) {
+  public TestCaseType(String name, String datetime, Integer test_suite_id, Integer test_run_id, Integer test_suite_history_id) {
     this.name = name;
     this.start_datetime = datetime;
     this.test_suite_id = test_suite_id;
     this.test_run_id = test_run_id;
+    this.test_suite_history_id = test_suite_history_id;
   }
 }

@@ -94,7 +94,7 @@ public class DeltaEventRegistrar implements TestLifecycleAware {
 
       this.suiteHistory =
           this.testSuiteHistoryTypeService.register(
-              name, this.DELTA_TEST_TYPE, datetime, this.DELTA_TEST_RUN_ID);
+              name, this.DELTA_TEST_TYPE, datetime, this.DELTA_TEST_RUN_ID, this.DELTA_PROJECT);
 
     } catch (Throwable e) {
       LOGGER.error("Undefined error during test case context start!", e);
@@ -286,10 +286,8 @@ public class DeltaEventRegistrar implements TestLifecycleAware {
 
     LOGGER.debug("Log message:" + logMessage);
 
-    Data data = new Data(logMessage);
-
     test.setStatus(status);
-    test.setData(data);
+    test.setTrace(logMessage);
     test.setEnd_datetime(finishTime);
 
     threadTest.remove();
@@ -310,7 +308,7 @@ public class DeltaEventRegistrar implements TestLifecycleAware {
     String datetime = new Date().toString();
 
     return this.testCaseTypeService.registerTestCase(
-        name, datetime, this.suiteHistory.getTest_suite_id(), this.DELTA_TEST_RUN_ID);
+        name, datetime, this.suiteHistory.getTest_suite_id(), this.DELTA_TEST_RUN_ID, this.suiteHistory.getTest_suite_history_id());
   }
 
   public static Optional<TestCaseType> getTest() {
