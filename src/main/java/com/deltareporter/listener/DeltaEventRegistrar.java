@@ -9,7 +9,6 @@ import com.deltareporter.listener.adapter.TestResultAdapter;
 import com.deltareporter.listener.domain.DeltaConfiguration;
 import com.deltareporter.listener.service.*;
 import com.deltareporter.listener.service.impl.*;
-import com.deltareporter.models.Data;
 import com.deltareporter.models.TestCaseType;
 import com.deltareporter.models.TestSuiteHistoryType;
 import com.deltareporter.util.ConfigurationUtil;
@@ -235,20 +234,6 @@ public class DeltaEventRegistrar implements TestLifecycleAware {
     return this.DELTA_ENABLED;
   }
 
-  private String getFullStackTrace(TestResultAdapter adapter) {
-    StringBuilder sb = new StringBuilder();
-    if (adapter.getThrowable() == null) {
-      return null;
-    } else {
-
-      sb.append(adapter.getThrowable().getMessage()).append("\n");
-      for (StackTraceElement elem : adapter.getThrowable().getStackTrace()) {
-        sb.append("\n").append(elem.toString());
-      }
-    }
-    return !StringUtils.isEmpty(sb.toString()) ? sb.toString() : null;
-  }
-
   private void processResultOnTestFailure(TestResultAdapter adapter) {
     if (!this.DELTA_ENABLED) {
       return;
@@ -260,11 +245,25 @@ public class DeltaEventRegistrar implements TestLifecycleAware {
     }
   }
 
-  private TestCaseType populateTestResult(TestResultAdapter adapter, String status, String message)
+  private TestCaseType populateTestResult(TestResultAdapter adapter, String status)
       throws JAXBException {
     long threadId = Thread.currentThread().getId();
     TestCaseType test = threadTest.get();
     String finishTime = new Date().toString();
+    StringBuilder sb = new StringBuilder();
+    String trace;
+    String message;
+
+    if (adapter.getThrowable() == null) {
+      trace = null;
+      message = null;
+    } else {
+      message = adapter.getThrowable().getMessage();
+      for (StackTraceElement elem : adapter.getThrowable().getStackTrace()) {
+        sb.append("\n").append(elem.toString());
+      }
+    }
+    trace = !StringUtils.isEmpty(sb.toString()) ? sb.toString() : null;
 
     String testName = this.configurator.getTestName(adapter);
     LOGGER.debug("testName registered with current thread is: " + testName);
@@ -279,15 +278,11 @@ public class DeltaEventRegistrar implements TestLifecycleAware {
 
     this.configurator.clearArtifacts();
 
-    String testDetails = "testHistoryId: %d; thread: %s; status: %s, finishTime: %s \n message: %s";
-    String logMessage =
-        String.format(
-            testDetails, test.getTest_history_id(), threadId, status, finishTime, message);
-
-    LOGGER.debug("Log message:" + logMessage);
-
     test.setStatus(status);
-    test.setTrace(logMessage);
+    test.setTrace(trace);
+    test.setFile(adapter.getFile());
+    test.setMessage(message);
+    test.setError_type(null);
     test.setEnd_datetime(finishTime);
 
     threadTest.remove();
@@ -296,8 +291,7 @@ public class DeltaEventRegistrar implements TestLifecycleAware {
   }
 
   private void finishTest(TestResultAdapter adapter, String status) throws JAXBException {
-    String fullStackTrace = getFullStackTrace(adapter);
-    TestCaseType finishedTest = populateTestResult(adapter, status, fullStackTrace);
+    TestCaseType finishedTest = populateTestResult(adapter, status);
     this.testCaseTypeService.finishTest(finishedTest);
   }
 

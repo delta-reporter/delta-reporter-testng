@@ -17,6 +17,8 @@ public class TestCaseType extends AbstractType {
   private String end_datetime;
   private String trace;
   private String file;
+  private String message;
+  private String error_type;
   private Integer retries;
 
   public void setTest_history_id(Integer test_history_id) {
@@ -45,6 +47,14 @@ public class TestCaseType extends AbstractType {
 
   public void setFile(String file) {
     this.file = file;
+  }
+
+  public void setMessage(String message) {
+    this.message = message;
+  }
+
+  public void setError_type(String error_type) {
+    this.error_type = error_type;
   }
 
   public void setRetries(Integer retries) {
@@ -92,9 +102,17 @@ public class TestCaseType extends AbstractType {
   public String getTrace() {
     return this.trace;
   }
-
+  
   public String getFile() {
     return this.file;
+  }
+
+  public String getMessage() {
+    return this.message;
+  }
+
+  public String getError_type() {
+    return this.error_type;
   }
 
   public Integer getRetries() {
