@@ -78,9 +78,9 @@ public class DeltaClientImpl implements DeltaClient {
   }
 
   public TestSuiteHistoryType registerTestSuiteHistory(
-      String name, String test_type, String start_datetime, Integer test_run_id) {
+      String name, String test_type, String start_datetime, Integer test_run_id, String project) {
     return this.extendedClient.registerTestSuiteHistory(
-        name, test_type, start_datetime, test_run_id);
+        name, test_type, start_datetime, test_run_id, project);
   }
 
   public void finishTestSuiteHistory(
@@ -90,7 +90,7 @@ public class DeltaClientImpl implements DeltaClient {
   }
 
   public TestCaseType registerTestCase(
-      String name, String datetime, Integer test_suite_id, Integer test_run_id) {
-    return this.extendedClient.registerTestCase(name, datetime, test_suite_id, test_run_id);
+      String name, String datetime, Integer test_suite_id, Integer test_run_id, Integer test_suite_history_id) {
+    return this.extendedClient.registerTestCase(name, datetime, test_suite_id, test_run_id, test_suite_history_id);
   }
 }

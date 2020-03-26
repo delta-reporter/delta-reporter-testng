@@ -13,6 +13,7 @@ public class TestSuiteHistoryType extends AbstractType {
   private Integer test_suite_id;
   private String end_datetime;
   private String test_suite_status;
+  private String project;
 
   public void setTest_suite_history_id(Integer test_suite_history_id) {
     this.test_suite_history_id = test_suite_history_id;
@@ -40,6 +41,10 @@ public class TestSuiteHistoryType extends AbstractType {
     return this.test_run_id;
   }
 
+  public String getProject() {
+    return this.project;
+  }
+
   public Integer getTest_suite_history_id() {
     return this.test_suite_history_id;
   }
@@ -57,11 +62,12 @@ public class TestSuiteHistoryType extends AbstractType {
   }
 
   public TestSuiteHistoryType(
-      String name, String test_type, String start_datetime, Integer test_run_id) {
+      String name, String test_type, String start_datetime, Integer test_run_id, String project) {
     this.name = name;
     this.test_type = test_type;
     this.start_datetime = start_datetime;
     this.test_run_id = test_run_id;
+    this.project = project;
   }
 
   public TestSuiteHistoryType(

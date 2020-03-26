@@ -32,6 +32,11 @@ public class TestResultAdapterImpl implements TestResultAdapter {
     return this.testResult.getThrowable();
   }
 
+  public String getFile() {
+    testResultNotNull();
+    return this.testResult.getTestClass().getName() + ".java";
+  }
+  
   public TestResultStatus getStatus() {
     testResultNotNull();
     return Arrays.<TestResultStatus>stream(TestResultStatus.values())

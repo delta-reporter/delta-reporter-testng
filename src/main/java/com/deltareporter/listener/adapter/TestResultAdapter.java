@@ -9,6 +9,8 @@ public interface TestResultAdapter {
 
   Throwable getThrowable();
 
+  String getFile();
+
   TestResultStatus getStatus();
 
   Set<String> getKnownClassNames();
