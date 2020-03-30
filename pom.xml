@@ -19,6 +19,16 @@
     </license>
   </licenses>
 
+  <developers>
+		<developer>
+			<name>Juan Negrier</name>
+			<email>juannegrier@gmail.com</email>
+			<organization>delta-reporter</organization>
+			<organizationUrl>https://github.com/delta-reporter</organizationUrl>
+			<timezone>UTC+01:00</timezone>
+		</developer>
+  </developers>
+
   <scm>
     <connection>scm:git:git://github.com:delta-reporter/delta-reporter-testng.git</connection>
     <developerConnection>scm:git:git@github.com:delta-reporter/delta-reporter-testng.git</developerConnection>
