@@ -13,8 +13,8 @@ public class TestCaseTypeServiceImpl implements TestCaseTypeService {
   }
 
   public TestCaseType registerTestCase(
-      String name, String datetime, Integer test_suite_id, Integer test_run_id, Integer test_suite_history_id) {
-    return this.deltaClient.registerTestCase(name, datetime, test_suite_id, test_run_id, test_suite_history_id);
+      String name, String datetime, String parameters, Integer test_suite_id, Integer test_run_id, Integer test_suite_history_id) {
+    return this.deltaClient.registerTestCase(name, datetime, parameters, test_suite_id, test_run_id, test_suite_history_id);
   }
 
   public TestCaseType finishTest(TestCaseType test) {

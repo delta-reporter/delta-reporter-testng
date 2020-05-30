@@ -6,7 +6,7 @@ import com.deltareporter.models.TestSuiteHistoryType;
 public interface ExtendedClient {
 
   TestCaseType registerTestCase(
-      String paramString1, String paramString2, Integer paramInteger1, Integer paramInteger2, Integer paramInteger3);
+      String paramString1, String paramString2, String paramString3, Integer paramInteger1, Integer paramInteger2, Integer paramInteger3);
 
   Integer registerLaunch(String paramString1, String paramString2);
 
@@ -18,4 +18,6 @@ public interface ExtendedClient {
   void finishTestSuiteHistory(Integer paramInteger1, String paramString2, String paramString3);
 
   void finishTestRun(Integer paramInteger1, String paramString2, String paramString3);
+
+  void finishLaunch(Integer paramInteger1);
 }

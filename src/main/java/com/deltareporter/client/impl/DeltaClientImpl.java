@@ -41,6 +41,10 @@ public class DeltaClientImpl implements DeltaClient {
     return this.basicClient.finishTestRun(testRun);
   }
 
+  public HttpClient.Response<LaunchType> finishLaunch(LaunchType testLaunch) {
+    return this.basicClient.finishLaunch(testLaunch);
+  }
+
   public HttpClient.Response<TestCaseType> finishTest(TestCaseType test) {
     return this.basicClient.finishTest(test);
   }
@@ -77,6 +81,10 @@ public class DeltaClientImpl implements DeltaClient {
     this.extendedClient.finishTestRun(test_run_id, end_datetime, test_run_status);
   }
 
+  public void finishLaunch(Integer launch_id) {
+    this.extendedClient.finishLaunch(launch_id);
+  }
+
   public TestSuiteHistoryType registerTestSuiteHistory(
       String name, String test_type, String start_datetime, Integer test_run_id, String project) {
     return this.extendedClient.registerTestSuiteHistory(
@@ -90,7 +98,7 @@ public class DeltaClientImpl implements DeltaClient {
   }
 
   public TestCaseType registerTestCase(
-      String name, String datetime, Integer test_suite_id, Integer test_run_id, Integer test_suite_history_id) {
-    return this.extendedClient.registerTestCase(name, datetime, test_suite_id, test_run_id, test_suite_history_id);
+      String name, String datetime, String parameters, Integer test_suite_id,  Integer test_run_id, Integer test_suite_history_id) {
+    return this.extendedClient.registerTestCase(name, datetime, parameters, test_suite_id, test_run_id, test_suite_history_id);
   }
 }
