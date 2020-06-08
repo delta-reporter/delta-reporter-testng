@@ -66,8 +66,14 @@ public class BasicClientImpl implements BasicClient {
 
   public synchronized HttpClient.Response<TestRunType> finishTestRun(TestRunType testRun) {
     return HttpClient.uri(Path.TEST_RUNS_PATH, this.serviceURL, new Object[0])
-        .onFailure("Unable to create test run")
+        .onFailure("Unable to finish test run")
         .put(TestRunType.class, testRun);
+  }
+
+  public synchronized HttpClient.Response<LaunchType> finishLaunch(LaunchType launch) {
+    return HttpClient.uri(Path.LAUNCH_FINISH, this.serviceURL, new Object[0])
+        .onFailure("Unable to finish launch")
+        .put(LaunchType.class, launch);
   }
 
   public synchronized HttpClient.Response<TestCaseType> createTestCase(TestCaseType testCase) {

@@ -14,5 +14,9 @@ public class DefaultConfigurator implements IConfigurator {
     return adapter.getMethodAdapter().getMethodName();
   }
 
+  // public String getTestParameters(TestResultAdapter adapter) {
+  //   return adapter.getMethodAdapter().get;
+  // }
+
   public void clearArtifacts() {}
 }

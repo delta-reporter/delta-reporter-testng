@@ -12,6 +12,10 @@ import com.deltareporter.listener.service.impl.*;
 import com.deltareporter.models.TestCaseType;
 import com.deltareporter.models.TestSuiteHistoryType;
 import com.deltareporter.util.ConfigurationUtil;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.xml.bind.JAXBException;
 import org.apache.commons.configuration2.CombinedConfiguration;
@@ -25,9 +29,13 @@ public class DeltaEventRegistrar implements TestLifecycleAware {
 
   private boolean DELTA_ENABLED;
 
+  private boolean GENERATED_LAUNCH;
+
   private String DELTA_TEST_TYPE;
 
   private String DELTA_PROJECT;
+
+  private Integer DELTA_LAUNCH_ID;
 
   private Integer DELTA_TEST_RUN_ID;
 
@@ -61,18 +69,20 @@ public class DeltaEventRegistrar implements TestLifecycleAware {
 
       String project = (String) DeltaConfiguration.PROJECT.get(adapter);
       project = !StringUtils.isEmpty(project) ? project : this.DELTA_PROJECT;
-      Integer DELTA_LAUNCH_ID = NumberUtils.createInteger(System.getenv("DELTA_LAUNCH_ID"));
+      this.DELTA_LAUNCH_ID = NumberUtils.createInteger(System.getenv("DELTA_LAUNCH_ID"));
 
-      if (DELTA_LAUNCH_ID == null) {
-        Long date = (new Date()).getTime();
-        String name = "Launch " + date;
-        DELTA_LAUNCH_ID = this.launchTypeService.register(name, project);
+      if (this.DELTA_LAUNCH_ID == null) {
+        Date date = new Date();
+        SimpleDateFormat ft = new SimpleDateFormat ("E dd-MM-yyyy hh:mm:ss a");
+        String name = this.DELTA_TEST_TYPE + " | " + ft.format(date);
+        this.DELTA_LAUNCH_ID = this.launchTypeService.register(name, project);
+        this.GENERATED_LAUNCH = true;
       }
 
       String datetime = new Date().toString();
 
       this.DELTA_TEST_RUN_ID =
-          this.testRunTypeService.register(this.DELTA_TEST_TYPE, DELTA_LAUNCH_ID, datetime);
+          this.testRunTypeService.register(this.DELTA_TEST_TYPE, this.DELTA_LAUNCH_ID, datetime);
 
     } catch (Throwable e) {
       this.DELTA_ENABLED = false;
@@ -190,6 +200,9 @@ public class DeltaEventRegistrar implements TestLifecycleAware {
       String end_datetime = new Date().toString();
       this.testRunTypeService.finish(
           this.DELTA_TEST_RUN_ID, end_datetime, testSuiteAdapter.testSuiteContextStatus());
+          if (this.GENERATED_LAUNCH){
+            this.launchTypeService.finish(this.DELTA_LAUNCH_ID);
+          }
         } catch (Throwable e) {
           LOGGER.error("Undefined error during test suite finish!", e);
         }
@@ -296,13 +309,32 @@ public class DeltaEventRegistrar implements TestLifecycleAware {
   }
 
   private TestCaseType registerTestCase(TestResultAdapter adapter) {
+    ObjectMapper mapper = new ObjectMapper();
+
     String testClass = adapter.getMethodAdapter().getTestClassName();
     String testMethod = this.configurator.getTestMethodName(adapter);
-    String name = testClass + ":" + testMethod;
+    Object[] testParameters = adapter.getParameters();
+    String params = null;
+    String name = null;
+    if (testParameters.length > 0) {
+      try {
+        params = mapper.writeValueAsString(testParameters);
+        name = testClass + ":" + testMethod + " [" + params;
+        name = name.substring(0, Math.min(name.length(), 299));
+        name = name + "]";
+        params = params.substring(0, Math.min(params.length(), 3000));
+      } catch (JsonProcessingException e) {
+        e.printStackTrace();
+      }
+    } else {
+      name = testClass + ":" + testMethod;
+      name = name.substring(0, Math.min(name.length(), 300));
+
+    }
     String datetime = new Date().toString();
 
     return this.testCaseTypeService.registerTestCase(
-        name, datetime, this.suiteHistory.getTest_suite_id(), this.DELTA_TEST_RUN_ID, this.suiteHistory.getTest_suite_history_id());
+        name, datetime, params, this.suiteHistory.getTest_suite_id(), this.DELTA_TEST_RUN_ID, this.suiteHistory.getTest_suite_history_id());
   }
 
   public static Optional<TestCaseType> getTest() {

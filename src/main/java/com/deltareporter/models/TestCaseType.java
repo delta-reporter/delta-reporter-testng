@@ -19,6 +19,7 @@ public class TestCaseType extends AbstractType {
   private String file;
   private String message;
   private String error_type;
+  private String parameters;
   private Integer retries;
 
   public void setTest_history_id(Integer test_history_id) {
@@ -59,6 +60,10 @@ public class TestCaseType extends AbstractType {
 
   public void setRetries(Integer retries) {
     this.retries = retries;
+  }
+
+  public void setParameters(String parameters) {
+    this.parameters = parameters;
   }
 
   public TestCaseType() {}
@@ -115,6 +120,10 @@ public class TestCaseType extends AbstractType {
     return this.error_type;
   }
 
+  public String getParameters() {
+    return this.parameters;
+  }
+
   public Integer getRetries() {
     return this.retries;
   }
@@ -123,9 +132,10 @@ public class TestCaseType extends AbstractType {
     return this.needRerun;
   }
 
-  public TestCaseType(String name, String datetime, Integer test_suite_id, Integer test_run_id, Integer test_suite_history_id) {
+  public TestCaseType(String name, String datetime, String parameters, Integer test_suite_id, Integer test_run_id, Integer test_suite_history_id) {
     this.name = name;
     this.start_datetime = datetime;
+    this.parameters = parameters;
     this.test_suite_id = test_suite_id;
     this.test_run_id = test_run_id;
     this.test_suite_history_id = test_suite_history_id;

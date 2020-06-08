@@ -19,7 +19,9 @@ public interface BasicClient {
 
   HttpClient.Response<TestCaseType> finishTest(TestCaseType paramTestType);
 
-  HttpClient.Response<TestRunType> finishTestRun(TestRunType paramTestRunTyp);
+  HttpClient.Response<TestRunType> finishTestRun(TestRunType paramTestRunType);
+
+  HttpClient.Response<LaunchType> finishLaunch(LaunchType paramLaunchType);
 
   HttpClient.Response<TestCaseType> createTestCase(TestCaseType paramTestCaseType);
 
