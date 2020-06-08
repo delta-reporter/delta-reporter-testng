@@ -62,6 +62,11 @@ public class TestResultAdapterImpl implements TestResultAdapter {
     return new MethodAdapterImpl(this.testResult.getMethod());
   }
 
+  public Object[] getParameters() {
+    testResultNotNull();
+    return this.testResult.getParameters();
+  }
+
   private void testResultNotNull() {
     if (this.testResult == null)
       throw new RuntimeException("TestNG test result is required to apply its data");

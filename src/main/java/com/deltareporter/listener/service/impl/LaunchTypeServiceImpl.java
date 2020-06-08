@@ -13,4 +13,8 @@ public class LaunchTypeServiceImpl implements LaunchTypeService {
   public Integer register(String name, String project) {
     return this.deltaClient.registerLaunch(name, project);
   }
+
+  public void finish(Integer launch_id) {
+    this.deltaClient.finishLaunch(launch_id);
+  }
 }
