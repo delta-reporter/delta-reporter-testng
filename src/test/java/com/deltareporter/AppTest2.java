@@ -8,8 +8,8 @@ import org.testng.annotations.Test;
 /** Unit test for simple App. */
 public class AppTest2 {
   /** Rigorous Test :-) */
-  @Test(enabled = false)
-  public void shouldAnswerWithNotTrue() {
+  @Test()
+  public void shouldAnswerWithTrue() {
     assertTrue(true);
   }
 
@@ -19,5 +19,10 @@ public class AppTest2 {
     System.out.println("Im in Conditional Skip");
     if (!DataAvailable) throw new SkipException("Skipping this exception");
     System.out.println("Executed Successfully");
+  }
+
+  @Test
+  public void shouldAnswerWithFalse() {
+    assertTrue(false);
   }
 }
