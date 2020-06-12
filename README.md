@@ -64,3 +64,9 @@ delta_project=Delta Reporter Demo
     [...]
 </suite>
 ```
+
+#### Run sample test in this repo 
+
+To run the sample test from this repo, run the following command: 
+
+`mvn clean test -Dsurefire.suiteXmlFiles=suites/TestSuite1.xml`
