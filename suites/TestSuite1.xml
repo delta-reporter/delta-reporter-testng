@@ -8,11 +8,11 @@
             <class name="com.deltareporter.AppTest"/>
         </classes>
     </test>
-    <test name = "Test for Delta Reporter Integration 2" >
+    <!-- <test name = "Test for Delta Reporter Integration 2" >
         <classes>
             <class name="com.deltareporter.AppTest2"/>
         </classes>
-    </test>
+    </test> -->
     <listeners>
         <listener class-name="com.deltareporter.listener.DeltaListener"/>
     </listeners>
