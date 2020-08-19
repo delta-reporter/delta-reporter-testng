@@ -79,6 +79,11 @@ public class DeltaEventRegistrar implements TestLifecycleAware {
         this.GENERATED_LAUNCH = true;
       }
 
+      if (System.getenv("TEST_TYPE")!=null) {
+        this.DELTA_TEST_TYPE = System.getenv("TEST_TYPE");
+        System.out.println("Test type for this run: " + this.DELTA_TEST_TYPE);
+      }
+
       String datetime = new Date().toString();
 
       this.DELTA_TEST_RUN_ID =
