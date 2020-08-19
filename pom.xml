@@ -26,6 +26,13 @@
 			<organization>delta-reporter</organization>
 			<organizationUrl>https://github.com/delta-reporter</organizationUrl>
 			<timezone>UTC+01:00</timezone>
+    </developer>
+    <developer>
+			<name>Oleksandra Pishcheiko</name>
+			<email>alpish2@gmail.com</email>
+			<organization>delta-reporter</organization>
+			<organizationUrl>https://github.com/delta-reporter</organizationUrl>
+			<timezone>UTC+01:00</timezone>
 		</developer>
   </developers>
 
