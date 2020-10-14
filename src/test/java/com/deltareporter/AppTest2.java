@@ -25,4 +25,9 @@ public class AppTest2 {
   public void shouldAnswerWithFalse() {
     assertTrue(true);
   }
+
+  @Test
+  public void shouldAnswerWithFalse321() {
+    assertTrue(false);
+  }
 }
