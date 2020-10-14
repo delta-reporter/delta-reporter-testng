@@ -1,0 +1,13 @@
+
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Delta Reporter Passing Tests" verbose="1">
+    <test name = "Test for Delta Reporter Integration 4" >
+        <classes>
+            <class name="com.deltareporter.AppTest4"/>
+        </classes>
+    </test>
+    <listeners>
+        <listener class-name="com.deltareporter.listener.DeltaListener"/>
+    </listeners>
+</suite>
