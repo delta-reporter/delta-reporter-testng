@@ -13,6 +13,16 @@
             <class name="com.deltareporter.AppTest2"/>
         </classes>
     </test>
+     <test name = "Test for Delta Reporter Integration 3" >
+        <classes>
+            <class name="com.deltareporter.AppTest3"/>
+        </classes>
+    </test>
+    <test name = "Test for Delta Reporter Integration 4" >
+        <classes>
+            <class name="com.deltareporter.AppTest4"/>
+        </classes>
+    </test>
     <listeners>
         <listener class-name="com.deltareporter.listener.DeltaListener"/>
     </listeners>
